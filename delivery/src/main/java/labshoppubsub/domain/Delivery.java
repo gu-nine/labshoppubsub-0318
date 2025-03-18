@@ -22,6 +22,8 @@ public class Delivery {
 
     private String productId;
 
+    private String customerId;
+
     private String address;
 
     private String status;
@@ -40,3 +42,12 @@ public class Delivery {
     }
 }
 //>>> DDD / Aggregate Root
+
+public static void addDelivery(OrderPlaced orderPlaced) {
+    Delivery delivery = new Delivery();
+    delivery.setCustomerId(orderPlaced.getCustomerId());
+    delivery.setAddress(orderPlaced.getAddress());
+    delivery.setStatus("Ready");
+    repository().save(delivery);
+
+}
