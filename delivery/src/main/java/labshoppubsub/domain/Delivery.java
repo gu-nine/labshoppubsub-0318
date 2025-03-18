@@ -20,9 +20,7 @@ public class Delivery {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String productId;
-
-    private String customerId;
+    private String customerid;
 
     private String address;
 
@@ -40,14 +38,32 @@ public class Delivery {
         );
         return deliveryRepository;
     }
+
+    //<<< Clean Arch / Port Method
+    public static void addDelivery(OrderPlaced orderPlaced) {
+        //implement business logic here:
+
+        Delivery delivery = new Delivery();
+        delivery.setCustomerid(orderPlaced.getCustomerId());
+        delivery.setAddress(orderPlaced.getAddress());
+        delivery.setStatus("READY");
+        repository().save(delivery);
+
+
+        /** Example 2:  finding and process
+        
+
+        repository().findById(orderPlaced.get???()).ifPresent(delivery->{
+            
+            delivery // do something
+            repository().save(delivery);
+
+
+         });
+        */
+
+    }
+    //>>> Clean Arch / Port Method
+
 }
 //>>> DDD / Aggregate Root
-
-public static void addDelivery(OrderPlaced orderPlaced) {
-    Delivery delivery = new Delivery();
-    delivery.setCustomerId(orderPlaced.getCustomerId());
-    delivery.setAddress(orderPlaced.getAddress());
-    delivery.setStatus("Ready");
-    repository().save(delivery);
-
-}
